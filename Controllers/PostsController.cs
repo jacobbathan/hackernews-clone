@@ -65,6 +65,59 @@ namespace sabio_project.Controllers
             }
         }
 
+        [HttpGet("{id:int}")]
+        public ActionResult<ItemResponse<Post>> GetById(int id)
+        {
+
+            ActionResult result = null;
+            Post post = new Post();
+
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlCommand command = new SqlCommand("dbo.Posts_GetById", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    connection.Open();
+
+                    command.Parameters.Add(new SqlParameter("@Id", id));
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        post.Id = Convert.ToInt32(reader["Id"]);
+                        post.Title = reader["Title"].ToString();
+                        post.Body = reader["Body"].ToString();
+                        post.Url = reader["Url"].ToString();
+                        post.Score = Convert.ToInt32(reader["Score"]);
+                        post.DateCreated = Convert.ToDateTime(reader["DateCreated"]);
+                        post.DateEdited = reader["DateEdited"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["DateEdited"];
+                        post.CreatedBy = reader["CreatedBy"].ToString();
+
+                        if (post == null)
+                        {
+                            post = new Post();
+                        }
+
+                    }
+
+                    connection.Close();
+                }
+                if (post != null)
+                {
+                    result = Ok(post);
+                    return result;
+                }
+                return BadRequest("Post does not exist");
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
         [HttpPost]
         public ActionResult<ItemResponse<int>> InsertPost(Post model)
         {
@@ -77,8 +130,6 @@ namespace sabio_project.Controllers
                     SqlCommand command = new SqlCommand("dbo.Posts_Insert", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     connection.Open();
-
-
 
                     command.Parameters.Add(new SqlParameter("@Title", model.Title));
                     command.Parameters.Add(new SqlParameter("@Body", model.Body));
@@ -93,9 +144,6 @@ namespace sabio_project.Controllers
                     command.Parameters.Add(outputParameter);
 
                     command.ExecuteNonQuery();
-
-                   
-
                     connection.Close();
 
                     ItemResponse<int> response = new ItemResponse<int>();
@@ -111,10 +159,72 @@ namespace sabio_project.Controllers
             }
         }
 
+        [HttpPut("{id:int}")]
+        public ActionResult<SuccessResponse> Put(Post model, int id)
+        {
+            ActionResult result = null;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlCommand command = new SqlCommand("dbo.Posts_Update", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    connection.Open();
+
+                    command.Parameters.Add(new SqlParameter("@Id", id));
+                    command.Parameters.Add(new SqlParameter("@Title", model.Title));
+                    command.Parameters.Add(new SqlParameter("@Body", model.Body));
+                    command.Parameters.Add(new SqlParameter("@Url", model.Url));
+                    command.Parameters.Add(new SqlParameter("@Score", model.Score));
+
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                    SuccessResponse response = new SuccessResponse();
+                    result = Ok(response);
+                    return result;
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        public ActionResult<SuccessResponse> Delete(int id)
+        {
+            ActionResult result = null;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlCommand command = new SqlCommand("dbo.Posts_Delete", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    connection.Open();
+
+                    command.Parameters.Add(new SqlParameter("@Id", id));
+
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                    SuccessResponse response = new SuccessResponse();
+                    result = Ok(response);
+                    return result;
+
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+        }
+
+
         [HttpGet("ping")]
         public ActionResult<string> Ping()
         {
-            // ActionResult result = null;
             return Ok("Ping test");
         }
     }
