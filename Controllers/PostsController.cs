@@ -134,7 +134,6 @@ namespace sabio_project.Controllers
                     command.Parameters.Add(new SqlParameter("@Title", model.Title));
                     command.Parameters.Add(new SqlParameter("@Body", model.Body));
                     command.Parameters.Add(new SqlParameter("@Url", model.Url));
-                    command.Parameters.Add(new SqlParameter("@Score", model.Score));
                     command.Parameters.Add(new SqlParameter("@CreatedBy", model.CreatedBy));
 
                     SqlParameter outputParameter = new SqlParameter();
