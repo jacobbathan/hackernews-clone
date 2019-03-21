@@ -1,13 +1,23 @@
 import React from "react";
 import * as services from "../AxiosServices";
 
-class PostForm extends React.Component {
-  state = {
-    title: "",
-    url: "",
-    body: "",
-    createdBy: ""
-  };
+class PostEdit extends React.Component {
+  constructor(props) {
+    super(props);
+    const newString = window.location;
+    const newArray = newString.pathname.split("/");
+    this.state = {
+      postId: newArray[2],
+      post: {
+        title: "",
+        body: "",
+        createdBy: "",
+        dateCreated: "",
+        url: "",
+        score: 0
+      }
+    };
+  }
 
   handleChange = evt => {
     this.setState({
@@ -15,19 +25,49 @@ class PostForm extends React.Component {
     });
   };
 
-  submitPost = () => {
+  componentDidMount() {
     services
-      .insertPost(this.state)
-      .then(this.submitPostSuccess)
-      .catch(this.submitPostError);
+      .getPostById(this.state.postId)
+      .then(this.getPostDataSuccess)
+      .catch(this.getPostDataError);
+  }
+
+  getPostDataSuccess = res => {
+    this.setState({
+      title: res.title,
+      body: res.body,
+      createdBy: res.createdBy,
+      dateCreated: res.dateCreated,
+      url: res.url,
+      score: res.score
+    });
   };
 
-  submitPostSuccess = result => {
-    console.log(result);
+  getPostDataError = err => {
+    console.log(err);
   };
 
-  submitPostError = error => {
-    console.log(error);
+  submitEdit = () => {
+    const payload = {
+      title: this.state.title,
+      body: this.state.body,
+      url: this.state.url,
+      score: this.state.score
+    };
+
+    services
+      .updatePost(payload, this.state.postId)
+      .then(this.updatePostSuccess)
+      .catch(this.updatePostError);
+  };
+
+  updatePostSuccess = res => {
+    console.log(res);
+    this.props.history.push("/item/" + this.state.postId);
+  };
+
+  updatePostError = err => {
+    console.log(err);
   };
 
   goBack = () => {
@@ -90,15 +130,15 @@ class PostForm extends React.Component {
                     name="createdBy"
                     value={this.state.createdBy}
                     size="50"
-                    onChange={this.handleChange}
+                    disabled
                   />
                 </td>
               </tr>
               <tr>
                 <td />
                 <td>
-                  <button type="button" onClick={this.submitPost}>
-                    submit
+                  <button type="button" onClick={this.submitEdit}>
+                    edit
                   </button>
                   <button type="button" onClick={this.goBack}>
                     go back
@@ -113,4 +153,4 @@ class PostForm extends React.Component {
   }
 }
 
-export default PostForm;
+export default PostEdit;

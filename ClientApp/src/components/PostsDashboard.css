@@ -33,8 +33,12 @@ a:link {
   text-decoration: none;
 }
 
-a:visted {
+a:visited {
   color: #000000;
+}
+
+input:read-only {
+  background-color: #d9d9d9;
 }
 
 .votearrow {

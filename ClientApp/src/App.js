@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import { Route } from "react-router";
 import PostsDashboard from "./components/PostsDashboard";
 import Header from "./components/Header";
-import PostForm from "./components/PostForm";
 
-export default class App extends Component {
+class App extends Component {
   static displayName = App.name;
 
   render() {
@@ -21,12 +19,7 @@ export default class App extends Component {
           >
             <tbody>
               <Header />
-              <Route
-                path="/"
-                exact
-                render={props => <PostsDashboard {...props} />}
-              />
-              <Route path="/submit" render={props => <PostForm {...props} />} />
+              <PostsDashboard />
             </tbody>
           </table>
         </center>
@@ -34,3 +27,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default App;

@@ -1,4 +1,6 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
+//import GetDate from "./GetDate.jsx";
 
 class PostsMap extends React.Component {
   urlParser = url => {
@@ -11,7 +13,20 @@ class PostsMap extends React.Component {
     return domain;
   };
 
+  getDate = longDate => {
+    let date = new Date(longDate);
+    return (
+      date.getUTCMonth() +
+      1 +
+      "/" +
+      date.getUTCDate() +
+      "/" +
+      date.getFullYear()
+    );
+  };
+
   mapPosts = () => {
+    console.log("POSTSMAP RENDER");
     const { posts } = this.props;
     return posts.map(data => (
       <React.Fragment>
@@ -22,10 +37,7 @@ class PostsMap extends React.Component {
           </td>{" "}
           <td valign="top" class="votelinks">
             <center>
-              <a
-                id="up_19444376"
-                href="vote?id=19444376&amp;how=up&amp;goto=news"
-              >
+              <a id={data.id} href="vote?id=19444376&amp;how=up&amp;goto=news">
                 <div class="votearrow" title="upvote" />
               </a>
             </center>
@@ -47,7 +59,7 @@ class PostsMap extends React.Component {
         <tr>
           <td colSpan="2" />
           <td class="subtext">
-            <span class="score" id="score_19444376">
+            <span class="score" id={data.id}>
               {data.score} points
             </span>{" "}
             by{" "}
@@ -55,11 +67,10 @@ class PostsMap extends React.Component {
               {data.createdBy}
             </a>{" "}
             <span class="age">
-              <a href="item?id=19444376">1 hour ago</a>
+              <a href="item?id=19444376">{this.getDate(data.dateCreated)}</a>
             </span>{" "}
             <span id="unv_19444376" /> |{" "}
-            <a href="hide?id=19444376&amp;goto=news">hide</a> |{" "}
-            <a href="item?id=19444376">21&nbsp;comments</a>{" "}
+            <NavLink to={"/item/" + data.id}>show</NavLink>
           </td>
         </tr>
         <tr class="morespace" style={{ height: "3px" }} />

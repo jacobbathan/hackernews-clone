@@ -1,7 +1,11 @@
 import React from "react";
-import img from "../assests/images/importantLillyPicture.jpg";
+// import img from "../assests/images/importantLillyPicture.jpg";
 import "./PostsDashboard.css";
 import Posts from "./Posts";
+import { Route } from "react-router";
+import PostById from "./PostById";
+import PostForm from "./PostForm";
+import PostEdit from "./PostEdit";
 
 class PostsDashboard extends React.Component {
   render() {
@@ -13,14 +17,20 @@ class PostsDashboard extends React.Component {
               <tbody>
                 <tr class="spacer" style={{ height: "5px" }} />
                 <tr class="morespace" style={{ height: "10px" }} />
-                <Posts />
+                <Route path="/" exact render={props => <Posts {...props} />} />
+                <Route
+                  path="/submit"
+                  exact
+                  render={props => <PostForm {...props} />}
+                />
+                <Route path="/item" render={props => <PostById {...props} />} />
+                <Route path="/edit" render={props => <PostEdit {...props} />} />
               </tbody>
             </table>
           </td>
         </tr>
         <tr>
           <td>
-            <img src={img} height="10" width="10" alt="testTxt" />
             <table width="100%" cellspacing="0" cellpadding="1">
               <tbody>
                 <tr>
@@ -31,7 +41,9 @@ class PostsDashboard extends React.Component {
             <br />
             <center>
               some dope things would go here, like maybe a search or some more
-              lilly pictures. Built using React {React.version}
+              lilly pictures.
+              <br />
+              built using react {React.version}
             </center>
           </td>
         </tr>

@@ -30,7 +30,7 @@ class Header extends React.Component {
                 <td style={{ lineHeight: "12pt", height: "10px" }}>
                   <span class="pagetop">
                     <b class="hnname">
-                      <a href="news">Lilly News</a>
+                      <a href="">Lilly News</a>
                     </b>
                     {"  "}| <a href="">news</a> | <a href="front">past</a> |{" "}
                     <a href="newcomments">comments</a> | <a href="ask">ask</a> |{" "}
