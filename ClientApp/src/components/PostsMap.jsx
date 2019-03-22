@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-//import GetDate from "./GetDate.jsx";
+import { connect } from "react-redux";
 
 class PostsMap extends React.Component {
   urlParser = url => {
@@ -27,8 +27,8 @@ class PostsMap extends React.Component {
 
   mapPosts = () => {
     console.log("POSTSMAP RENDER");
-    const { posts } = this.props;
-    return posts.map((data, index) => (
+
+    return this.props.posts.map((data, index) => (
       <React.Fragment>
         <tr class="spacer" style={{ height: "3px" }} />
         <tr class="athing" id={data.id}>
@@ -83,4 +83,10 @@ class PostsMap extends React.Component {
   }
 }
 
-export default PostsMap;
+const mapStateToProps = state => {
+  return {
+    posts: state.posts
+  };
+};
+
+export default connect(mapStateToProps)(PostsMap);

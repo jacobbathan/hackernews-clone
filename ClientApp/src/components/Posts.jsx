@@ -1,6 +1,7 @@
 import React from "react";
 import * as services from "../AxiosServices";
 import PostsMap from "./PostsMap";
+import { connect } from "react-redux";
 
 class Posts extends React.Component {
   state = {
@@ -16,9 +17,7 @@ class Posts extends React.Component {
 
   getAllPostsSuccess = results => {
     console.log(results);
-    this.setState({
-      posts: results.dataResponse
-    });
+    this.props.getAllPostsRedux(results.dataResponse);
   };
 
   getAllPostsError = error => {
@@ -28,10 +27,19 @@ class Posts extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <PostsMap posts={this.state.posts} />
+        <PostsMap />
       </React.Fragment>
     );
   }
 }
 
-export default Posts;
+const mapDispatchToProps = dispatch => {
+  return {
+    getAllPostsRedux: value => dispatch({ type: "getAllPosts", value: value })
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Posts);
