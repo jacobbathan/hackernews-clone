@@ -28,12 +28,12 @@ class PostsMap extends React.Component {
   mapPosts = () => {
     console.log("POSTSMAP RENDER");
     const { posts } = this.props;
-    return posts.map(data => (
+    return posts.map((data, index) => (
       <React.Fragment>
         <tr class="spacer" style={{ height: "3px" }} />
         <tr class="athing" id={data.id}>
           <td align="right" valign="top" class="title">
-            <span class="rank">1.</span>
+            <span class="rank">{index + 1}.</span>
           </td>{" "}
           <td valign="top" class="votelinks">
             <center>
