@@ -1,23 +1,16 @@
 import React from "react";
 import * as services from "../AxiosServices";
+import { connect } from "react-redux";
 
 class PostEdit extends React.Component {
-  constructor(props) {
-    super(props);
-    const newString = window.location;
-    const newArray = newString.pathname.split("/");
-    this.state = {
-      postId: newArray[2],
-      post: {
-        title: "",
-        body: "",
-        createdBy: "",
-        dateCreated: "",
-        url: "",
-        score: 0
-      }
-    };
-  }
+  state = {
+    title: "",
+    body: "",
+    createdBy: "",
+    dateCreated: "",
+    url: "",
+    score: ""
+  };
 
   handleChange = evt => {
     this.setState({
@@ -26,26 +19,15 @@ class PostEdit extends React.Component {
   };
 
   componentDidMount() {
-    services
-      .getPostById(this.state.postId)
-      .then(this.getPostDataSuccess)
-      .catch(this.getPostDataError);
-  }
-
-  getPostDataSuccess = res => {
     this.setState({
-      title: res.title,
-      body: res.body,
-      createdBy: res.createdBy,
-      dateCreated: res.dateCreated,
-      url: res.url,
-      score: res.score
+      title: this.props.viewedPost.title,
+      body: this.props.viewedPost.body,
+      createdBy: this.props.viewedPost.createdBy,
+      dateCreated: this.props.viewedPost.dateCreated,
+      url: this.props.viewedPost.url,
+      score: this.props.viewedPost.score
     });
-  };
-
-  getPostDataError = err => {
-    console.log(err);
-  };
+  }
 
   submitEdit = () => {
     const payload = {
@@ -153,4 +135,10 @@ class PostEdit extends React.Component {
   }
 }
 
-export default PostEdit;
+const mapStateToProps = state => {
+  return {
+    viewedPost: state.viewedPost
+  };
+};
+
+export default connect(mapStateToProps)(PostEdit);

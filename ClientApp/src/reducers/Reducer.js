@@ -3,13 +3,36 @@ import { createStore } from "redux";
 function reducer(store, action) {
   if (!store) {
     return {
-      posts: []
+      posts: [],
+      viewedPost: {
+        id: 0,
+        title: "",
+        body: "",
+        createdBy: "",
+        dateCreated: "",
+        url: "",
+        score: 0
+      },
+      insertForm: {
+        title: "",
+        url: "",
+        body: "",
+        createdBy: ""
+      }
     };
   }
 
   if (action.type === "getAllPosts") {
     return {
+      ...store,
       posts: action.value
+    };
+  }
+
+  if (action.type === "getViewedPost") {
+    return {
+      ...store,
+      viewedPost: action.value
     };
   }
 }

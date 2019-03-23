@@ -1,5 +1,6 @@
 import React from "react";
 import * as services from "../AxiosServices";
+import { connect } from "react-redux";
 
 class PostById extends React.Component {
   constructor(props) {
@@ -7,15 +8,7 @@ class PostById extends React.Component {
     const newString = window.location;
     const newArray = newString.pathname.split("/");
     this.state = {
-      postId: newArray[2],
-      post: {
-        title: "",
-        body: "",
-        createdBy: "",
-        dateCreated: "",
-        url: "",
-        score: 0
-      }
+      postId: newArray[2]
     };
   }
 
@@ -40,9 +33,10 @@ class PostById extends React.Component {
 
   getPostSuccess = res => {
     console.log(res);
-    this.setState({
-      post: res
-    });
+    this.props.getViewedPost(res);
+    // this.setState({
+    //   post: res
+    // });
   };
 
   goBack = () => {
@@ -102,7 +96,7 @@ class PostById extends React.Component {
             </td>
             <td class="title">
               <a href="item?id=19453948" class="storylink">
-                {this.state.post.title}
+                {this.props.viewedPost.title}
               </a>
             </td>
           </tr>
@@ -110,17 +104,17 @@ class PostById extends React.Component {
             <td colspan="2" />
             <td class="subtext">
               <span class="score" id="score_19453948">
-                {this.state.post.score} points
+                {this.props.viewedPost.score} points
               </span>{" "}
               by{" "}
               <a href="user?id=olivierduval" class="hnuser">
-                {this.state.post.createdBy}
+                {this.props.viewedPost.createdBy}
               </a>{" "}
               |
               <span class="age">
                 <a href="item?id=19453948">
                   {" "}
-                  post made {this.getDate(this.state.post.dateCreated)}
+                  post made {this.getDate(this.props.viewedPost.dateCreated)}
                 </a>
               </span>{" "}
             </td>
@@ -129,7 +123,7 @@ class PostById extends React.Component {
           <tr>
             <td colspan="2" />
             <td>
-              <p>{this.state.post.body}</p>
+              <p>{this.props.viewedPost.body}</p>
             </td>
           </tr>
           <tr style={{ height: "10px" }} />
@@ -153,4 +147,19 @@ class PostById extends React.Component {
   }
 }
 
-export default PostById;
+const mapDispatchToProps = dispatch => {
+  return {
+    getViewedPost: value => dispatch({ type: "getViewedPost", value: value })
+  };
+};
+
+const mapStateToProps = state => {
+  return {
+    viewedPost: state.viewedPost
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PostById);
