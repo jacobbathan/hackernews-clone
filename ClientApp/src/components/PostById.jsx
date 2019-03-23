@@ -34,9 +34,6 @@ class PostById extends React.Component {
   getPostSuccess = res => {
     console.log(res);
     this.props.getViewedPost(res);
-    // this.setState({
-    //   post: res
-    // });
   };
 
   goBack = () => {

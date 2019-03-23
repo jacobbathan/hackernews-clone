@@ -20,7 +20,7 @@ class PostEdit extends React.Component {
 
   componentDidMount() {
     this.setState({
-      title: this.props.viewedPost.title,
+      // title: this.props.viewedPost.title,
       body: this.props.viewedPost.body,
       createdBy: this.props.viewedPost.createdBy,
       dateCreated: this.props.viewedPost.dateCreated,
@@ -72,6 +72,7 @@ class PostEdit extends React.Component {
                     value={this.state.title}
                     size="50"
                     onChange={this.handleChange}
+                    defaultValue={this.props.viewedPost.title}
                   />
                   <span style={{ marginLeft: "10px" }} />
                 </td>
