@@ -1,5 +1,6 @@
 import React from "react";
 import * as services from "../AxiosServices";
+import { connect } from "react-redux";
 
 class PostForm extends React.Component {
   state = {
@@ -15,15 +16,25 @@ class PostForm extends React.Component {
     });
   };
 
-  submitPost = () => {
+  submitPost = async () => {
+    const payload = {
+      ...this.state
+    };
+
+    await this.props.formPostPayload(payload);
+    this.insertPost();
+  };
+
+  insertPost = () => {
     services
-      .insertPost(this.state)
+      .insertPost(this.props.formData)
       .then(this.submitPostSuccess)
       .catch(this.submitPostError);
   };
 
   submitPostSuccess = result => {
     console.log(result);
+    this.props.history.push("/item/" + result.item);
   };
 
   submitPostError = error => {
@@ -113,4 +124,20 @@ class PostForm extends React.Component {
   }
 }
 
-export default PostForm;
+const mapStateToProps = state => {
+  return {
+    formData: state.postFormData
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    formPostPayload: value =>
+      dispatch({ type: "setInsertPayload", value: value })
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PostForm);

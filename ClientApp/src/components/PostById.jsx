@@ -42,7 +42,7 @@ class PostById extends React.Component {
 
   editPost = () => {
     console.log(this.state.postId);
-    this.props.history.push("/edit/" + this.state.postId);
+    this.props.history.push("/edit/" + this.props.viewedPost.id);
   };
 
   deletePost = () => {
@@ -58,7 +58,7 @@ class PostById extends React.Component {
 
   deletePostConfirm = () => {
     services
-      .deletePost(this.state.postId)
+      .deletePost(this.props.viewedPost.id)
       .then(this.deletePostSuccess)
       .catch(this.deletePostError);
   };

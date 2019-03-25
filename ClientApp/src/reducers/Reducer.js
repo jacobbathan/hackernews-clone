@@ -13,7 +13,13 @@ function reducer(store, action) {
         url: "",
         score: 0
       },
-      insertForm: {
+      editFormData: {
+        title: "",
+        url: "",
+        body: "",
+        createdBy: ""
+      },
+      postFormData: {
         title: "",
         url: "",
         body: "",
@@ -33,6 +39,20 @@ function reducer(store, action) {
     return {
       ...store,
       viewedPost: action.value
+    };
+  }
+
+  if (action.type === "setEditPayload") {
+    return {
+      ...store,
+      editFormData: action.value
+    };
+  }
+
+  if (action.type === "setInsertPayload") {
+    return {
+      ...store,
+      postFormData: action.value
     };
   }
 }

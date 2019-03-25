@@ -3,33 +3,22 @@ import * as services from "../AxiosServices";
 import { connect } from "react-redux";
 
 class PostEdit extends React.Component {
-  state = {
-    title: "",
-    body: "",
-    createdBy: "",
-    dateCreated: "",
-    url: "",
-    score: ""
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      ...props.viewedPost
+    };
+  }
 
   handleChange = evt => {
     this.setState({
       [evt.target.name]: evt.target.value
     });
   };
+  v;
 
-  componentDidMount() {
-    this.setState({
-      // title: this.props.viewedPost.title,
-      body: this.props.viewedPost.body,
-      createdBy: this.props.viewedPost.createdBy,
-      dateCreated: this.props.viewedPost.dateCreated,
-      url: this.props.viewedPost.url,
-      score: this.props.viewedPost.score
-    });
-  }
-
-  submitEdit = () => {
+  submitEdit = async () => {
     const payload = {
       title: this.state.title,
       body: this.state.body,
@@ -37,15 +26,20 @@ class PostEdit extends React.Component {
       score: this.state.score
     };
 
+    await this.props.editPostPayload(payload);
+    this.updatePost();
+  };
+
+  updatePost = () => {
     services
-      .updatePost(payload, this.state.postId)
+      .updatePost(this.props.formData, this.state.id)
       .then(this.updatePostSuccess)
       .catch(this.updatePostError);
   };
 
   updatePostSuccess = res => {
     console.log(res);
-    this.props.history.push("/item/" + this.state.postId);
+    this.props.history.push("/item/" + this.state.id);
   };
 
   updatePostError = err => {
@@ -72,7 +66,6 @@ class PostEdit extends React.Component {
                     value={this.state.title}
                     size="50"
                     onChange={this.handleChange}
-                    defaultValue={this.props.viewedPost.title}
                   />
                   <span style={{ marginLeft: "10px" }} />
                 </td>
@@ -138,8 +131,18 @@ class PostEdit extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    viewedPost: state.viewedPost
+    viewedPost: state.viewedPost,
+    formData: state.editFormData
   };
 };
 
-export default connect(mapStateToProps)(PostEdit);
+const mapDispatchToProps = dispatch => {
+  return {
+    editPostPayload: value => dispatch({ type: "setEditPayload", value: value })
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PostEdit);
