@@ -24,6 +24,7 @@ class PostForm extends React.Component {
 
   submitPostSuccess = result => {
     console.log(result);
+    this.props.history.push("/item/" + result.item);
   };
 
   submitPostError = error => {
