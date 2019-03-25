@@ -144,6 +144,10 @@ class PostById extends React.Component {
               <button type="button" onClick={this.goBack}>
                 go back
               </button>
+              <br />
+              <button type="button" onClick={this.sharePost}>
+                share to slack
+              </button>
             </td>
             <td />
           </tr>

@@ -1,5 +1,8 @@
 import axios from "axios";
 
+const token = "xoxb-563687756291-588802262934-GgzvlLsaySDiuDbaFrqNIHpr";
+const channel = "CH7HDQP0D";
+
 const onGlobalSuccess = response => {
   return response.data;
 };
@@ -70,4 +73,23 @@ const deletePost = id => {
     .catch(onGlobalError);
 };
 
-export { getAllPosts, getPostById, insertPost, updatePost, deletePost };
+const shareToSlack = text => {
+  const config = {
+    method: "POST",
+    url: `http://slack.com/api/chat.postMessage?token=${token}&channel=${channel}&text=${text}`,
+    crossdomain: "true",
+    headers: { "Content-Type": "application/json" }
+  };
+  return axios(config)
+    .then(onGlobalSuccess)
+    .catch(onGlobalError);
+};
+
+export {
+  getAllPosts,
+  getPostById,
+  insertPost,
+  updatePost,
+  deletePost,
+  shareToSlack
+};
