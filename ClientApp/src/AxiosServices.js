@@ -76,7 +76,7 @@ const deletePost = id => {
 const shareToSlack = text => {
   const config = {
     method: "POST",
-    url: `http://slack.com/api/chat.postMessage?token=${token}&channel=${channel}&text=${text}`,
+    url: `https://slack.com/api/chat.postMessage?token=${token}&channel=${channel}&text=${text}`,
     crossdomain: "true",
     headers: { "Content-Type": "application/json" }
   };

@@ -81,6 +81,21 @@ class PostById extends React.Component {
     console.log(err);
   };
 
+  sharePost = () => {
+    services
+      .shareToSlack(this.state.post.body)
+      .then(this.sharePostSuccess)
+      .catch(this.sharePostError);
+  };
+
+  sharePostSuccess = res => {
+    console.log(res);
+  };
+
+  sharePostError = err => {
+    console.log(err);
+  };
+
   render() {
     return (
       <table class="fatitem" border="0">
