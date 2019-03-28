@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AngleSharp.Html.Parser;
+using Microsoft.AspNetCore.Mvc;
 using sabio_project.Models;
 using sabio_project.Models.WebModels;
+using sabio_project.Services;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net;
 
 namespace sabio_project.Controllers
 {
@@ -13,6 +16,8 @@ namespace sabio_project.Controllers
     public class PostsController : ControllerBase
     {
         private readonly string connectionString = "Server=.\\SQLEXPRESS;Database=C68Personal;Trusted_Connection=True;";
+
+        WebScraperService webScraperService = new WebScraperService();
 
         [HttpGet]
         public ActionResult<Response<List<Post>>> GetAllPosts()
@@ -220,6 +225,33 @@ namespace sabio_project.Controllers
             }
         }
 
+        [HttpGet("webscrape")]
+        public ActionResult<SuccessResponse> AddWebScrape()
+        {
+            ActionResult result = null;
+            List<WebScrapedPost> scrappedPosts = null;
+
+            var webClient = new WebClient();
+            var html = webClient.DownloadString("https://www.techmeme.com/river");
+
+            var parser = new HtmlParser();
+            var document = parser.ParseDocument(html);
+
+            var table = document.QuerySelector("#river_timeline");
+            var rows = table.QuerySelectorAll(".ritem");
+
+            foreach (var row in rows)
+            {
+                var newPost = new WebScrapedPost();
+                newPost.Title = row.QuerySelectorAll("a")[1].TextContent;
+                newPost.Url = row.QuerySelectorAll("a")[1].GetAttribute("href");
+                newPost.CreatedBy = row.QuerySelector("cite").TextContent.Split('/')[0].Trim();
+
+                int addpost = webScraperService.InsertWebScrape(newPost);
+            }
+
+            return Ok(result);
+        }
 
         [HttpGet("ping")]
         public ActionResult<string> Ping()

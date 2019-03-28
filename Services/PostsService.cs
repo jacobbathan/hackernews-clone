@@ -10,3 +10,4 @@ namespace sabio_project.Services
         private string connectionString = "Server=.\\SQLEXPRESS;Database=C68Personal;Trusted_Connection=True;";
     }
 }
+
