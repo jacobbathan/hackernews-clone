@@ -11,7 +11,7 @@ class Header extends React.Component {
             cellpadding="0"
             cellspacing="0"
             width="100%"
-            style={{ padding: "2px" }}
+            style={{ padding: "4px" }}
           >
             <tbody>
               <tr>
@@ -38,8 +38,8 @@ class Header extends React.Component {
                     </b>
                     {"  "}| <a href="">news</a> |{" "}
                     <a href="fileUpload">file upload</a> |{" "}
-                    <a href="newcomments">comments</a> | <a href="ask">ask</a> |{" "}
-                    <a href="show">show</a> | <a href="jobs">jobs</a> |{" "}
+                    <a href="webscraper">web scraper</a> | <a href="ask">ask</a>{" "}
+                    | <a href="show">show</a> | <a href="jobs">jobs</a> |{" "}
                     <a href="submit">submit</a>{" "}
                   </span>
                 </td>

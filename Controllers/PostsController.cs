@@ -221,6 +221,27 @@ namespace sabio_project.Controllers
             return Ok(result);
         }
 
+        [HttpGet("webscrape/getall")]
+        public ActionResult<Response<List<WebScrapedPost>>> GetAll()
+        {
+            ActionResult result = null;
+            List<WebScrapedPost> postList = null;
+
+            try
+            {
+                postList = webScraperService.GetAll();
+                if (postList != null)
+                {
+                    result = Ok(postList);
+                }
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+            }
+            return result;
+        }
+
         [HttpPost("upload")]
         public async Task<UploadPhotoModel> Upload(IFormFile file)
         {

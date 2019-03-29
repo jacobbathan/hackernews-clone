@@ -48,5 +48,46 @@ namespace sabio_project.Services
 
             return id;
         }
+
+        public List<WebScrapedPost> GetAll()
+        {
+            List<WebScrapedPost> postList = null;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlCommand command = new SqlCommand("dbo.ScrapedNews_GetAll", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        WebScrapedPost post = new WebScrapedPost();
+
+                        post.Id = Convert.ToInt32(reader["Id"]);
+                        post.Title = reader["Title"].ToString();
+                        post.Url = reader["Url"].ToString();
+                        post.DateCreated = Convert.ToDateTime(reader["DateCreated"]);
+                        post.CreatedBy = reader["CreatedBy"].ToString();
+
+                        if (postList == null)
+                        {
+                            postList = new List<WebScrapedPost>();
+                        }
+                        postList.Add(post);
+
+                    }
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return postList;
+        }
     }
 }
