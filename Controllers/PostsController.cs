@@ -1,4 +1,5 @@
 ﻿using AngleSharp.Html.Parser;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using sabio_project.Models;
 using sabio_project.Models.WebModels;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace sabio_project.Controllers
 {
@@ -17,7 +19,8 @@ namespace sabio_project.Controllers
     {
         private readonly string connectionString = "Server=.\\SQLEXPRESS;Database=C68Personal;Trusted_Connection=True;";
 
-        WebScraperService webScraperService = new WebScraperService();
+        private WebScraperService webScraperService = new WebScraperService();
+        private FileUpload fileUpload = new FileUpload();
 
         [HttpGet]
         public ActionResult<Response<List<Post>>> GetAllPosts()
@@ -73,10 +76,8 @@ namespace sabio_project.Controllers
         [HttpGet("{id:int}")]
         public ActionResult<ItemResponse<Post>> GetById(int id)
         {
-
             ActionResult result = null;
             Post post = new Post();
-
 
             try
             {
@@ -105,7 +106,6 @@ namespace sabio_project.Controllers
                         {
                             post = new Post();
                         }
-
                     }
 
                     connection.Close();
@@ -151,14 +151,13 @@ namespace sabio_project.Controllers
                     connection.Close();
 
                     ItemResponse<int> response = new ItemResponse<int>();
-                    response.Item =(int)outputParameter.Value;
+                    response.Item = (int)outputParameter.Value;
                     result = Ok(response);
                     return result;
                 }
             }
             catch (Exception exception)
             {
-                
                 throw exception;
             }
         }
@@ -216,7 +215,6 @@ namespace sabio_project.Controllers
                     SuccessResponse response = new SuccessResponse();
                     result = Ok(response);
                     return result;
-
                 }
             }
             catch (Exception exception)
@@ -229,7 +227,6 @@ namespace sabio_project.Controllers
         public ActionResult<SuccessResponse> AddWebScrape()
         {
             ActionResult result = null;
-            List<WebScrapedPost> scrappedPosts = null;
 
             var webClient = new WebClient();
             var html = webClient.DownloadString("https://www.techmeme.com/river");
@@ -251,6 +248,17 @@ namespace sabio_project.Controllers
             }
 
             return Ok(result);
+        }
+
+        [HttpPost("upload")]
+        public async Task<UploadPhotoModel> Upload()
+        {
+            var file = this.Request.Form.Files[0];
+            UploadPhotoModel imageResponse = await fileUpload.UploadObject(file);
+
+            fileUpload.InsertImage(imageResponse.FileUrl);
+
+            return imageResponse;
         }
 
         [HttpGet("ping")]

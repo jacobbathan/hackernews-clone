@@ -32,7 +32,8 @@ class Header extends React.Component {
                     <b class="hnname">
                       <a href="">Lilly News</a>
                     </b>
-                    {"  "}| <a href="">news</a> | <a href="front">past</a> |{" "}
+                    {"  "}| <a href="">news</a> |{" "}
+                    <a href="fileUpload">file upload</a> |{" "}
                     <a href="newcomments">comments</a> | <a href="ask">ask</a> |{" "}
                     <a href="show">show</a> | <a href="jobs">jobs</a> |{" "}
                     <a href="submit">submit</a>{" "}
