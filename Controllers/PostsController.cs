@@ -21,56 +21,27 @@ namespace sabio_project.Controllers
 
         private WebScraperService webScraperService = new WebScraperService();
         private FileUpload fileUpload = new FileUpload();
+        private PostsService postService = new PostsService();
 
         [HttpGet]
         public ActionResult<Response<List<Post>>> GetAllPosts()
         {
-            Response<List<Post>> response = null;
+            ActionResult result = null;
             List<Post> postList = null;
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    SqlCommand command = new SqlCommand("dbo.Posts_GetAll", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        Post post = new Post();
-
-                        post.Id = Convert.ToInt32(reader["Id"]);
-                        post.Title = reader["Title"].ToString();
-                        post.Body = reader["Body"].ToString();
-                        post.Url = reader["Url"].ToString();
-                        post.Score = Convert.ToInt32(reader["Score"]);
-                        post.DateCreated = Convert.ToDateTime(reader["DateCreated"]);
-                        post.DateEdited = reader["DateEdited"] == DBNull.Value ? (DateTime?)null : (DateTime)reader["DateEdited"];
-                        post.CreatedBy = reader["CreatedBy"].ToString();
-
-                        if (postList == null)
-                        {
-                            postList = new List<Post>();
-                        }
-                        postList.Add(post);
-                    }
-
-                    connection.Close();
-                }
+                postList = postService.GetAllPosts();
                 if (postList != null)
                 {
-                    response = new Response<List<Post>>(postList);
-                    return Ok(response);
+                    result = Ok(postList);
                 }
-                return BadRequest("Bad request has been made");
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                throw ex;
+                throw exception;
             }
+            return result;
         }
 
         [HttpGet("{id:int}")]
@@ -251,9 +222,9 @@ namespace sabio_project.Controllers
         }
 
         [HttpPost("upload")]
-        public async Task<UploadPhotoModel> Upload()
+        public async Task<UploadPhotoModel> Upload(IFormFile file)
         {
-            var file = this.Request.Form.Files[0];
+            //var file = files[0];
             UploadPhotoModel imageResponse = await fileUpload.UploadObject(file);
 
             fileUpload.InsertImage(imageResponse.FileUrl);

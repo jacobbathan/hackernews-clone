@@ -17,7 +17,7 @@ class Posts extends React.Component {
   getAllPostsSuccess = results => {
     console.log(results);
     this.setState({
-      posts: results.dataResponse
+      posts: results
     });
   };
 

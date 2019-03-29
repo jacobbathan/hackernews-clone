@@ -14,7 +14,8 @@ class PostById extends React.Component {
         createdBy: "",
         dateCreated: "",
         url: "",
-        score: 0
+        score: 0,
+        id: 0
       }
     };
   }
@@ -100,23 +101,19 @@ class PostById extends React.Component {
     return (
       <table class="fatitem" border="0">
         <tbody>
-          <tr class="athing" id="19453948">
+          <tr class="athing">
             <td align="right" valign="top" class="title">
               <span class="rank" />
             </td>{" "}
             <td valign="top" class="votelinks">
               <center>
-                <a
-                  id="up_19453948"
-                  onclick='return vote(event, this, "up")'
-                  href="vote?id=19453948&amp;how=up&amp;auth=38ccc783d9a1305625d544b526c8847701b5fe5b&amp;goto=item%3Fid%3D19453948"
-                >
+                <span id={this.state.post.id}>
                   <div class="votearrow" title="upvote" />
-                </a>
+                </span>
               </center>
             </td>
             <td class="title">
-              <a href="item?id=19453948" class="storylink">
+              <a href={this.state.post.url} class="storylink">
                 {this.state.post.title}
               </a>
             </td>
@@ -124,7 +121,7 @@ class PostById extends React.Component {
           <tr>
             <td colspan="2" />
             <td class="subtext">
-              <span class="score" id="score_19453948">
+              <span class="score" id={this.state.post.id}>
                 {this.state.post.score} points
               </span>{" "}
               by{" "}
@@ -133,10 +130,10 @@ class PostById extends React.Component {
               </a>{" "}
               |
               <span class="age">
-                <a href="item?id=19453948">
+                <span>
                   {" "}
                   post made {this.getDate(this.state.post.dateCreated)}
-                </a>
+                </span>
               </span>{" "}
             </td>
           </tr>
@@ -149,6 +146,7 @@ class PostById extends React.Component {
           </tr>
           <tr style={{ height: "10px" }} />
           <tr>
+            <br />
             <td colspan="2">
               <button type="button" onClick={this.editPost}>
                 edit
@@ -159,7 +157,6 @@ class PostById extends React.Component {
               <button type="button" onClick={this.goBack}>
                 go back
               </button>
-              <br />
               <button type="button" onClick={this.sharePost}>
                 share to slack
               </button>

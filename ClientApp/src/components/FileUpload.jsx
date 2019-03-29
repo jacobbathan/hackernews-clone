@@ -8,22 +8,9 @@ class FileUpload extends React.Component {
 
   fileRef = React.createRef();
 
-  uploadImage = event => {
-    const files = this.fileRef.current.files;
-    const formData = new FormData();
-    if (files.length > 0) {
-      for (let i = 0; i < files.length; i++) {
-        let file = files[i];
-        formData.append("uploads", file, file.name);
-      }
-    }
-
-    // event.preventDefault();
-    // const file_input = this.fileInputRef.current;
-    // const data = new FormData();
-    // data.append("file", file_input.files[0]);
+  uploadImage = file => {
     imageServices
-      .uploadImage(formData)
+      .uploadImage(file)
       .then(this.uploadImageSuccess)
       .catch(this.uploadImageError);
   };
@@ -37,9 +24,8 @@ class FileUpload extends React.Component {
   };
 
   handleChange = evt => {
-    this.setState({
-      [evt.target.name]: evt.target.value
-    });
+    const file = evt.target.files[0];
+    this.uploadImage(file);
   };
 
   render() {
@@ -47,7 +33,7 @@ class FileUpload extends React.Component {
       <div>
         <label htmlFor="uploadImage">Upload an Image:</label>
         <input
-          ref={this.fileInputRef}
+          // ref={this.fileRef}
           id="primaryImage"
           type="file"
           name="primaryImage"

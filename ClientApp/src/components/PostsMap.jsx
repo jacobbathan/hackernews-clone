@@ -37,7 +37,7 @@ class PostsMap extends React.Component {
           </td>{" "}
           <td valign="top" class="votelinks">
             <center>
-              <a id={data.id} href="vote?id=19444376&amp;how=up&amp;goto=news">
+              <a id={data.id} href="">
                 <div class="votearrow" title="upvote" />
               </a>
             </center>
@@ -63,11 +63,11 @@ class PostsMap extends React.Component {
               {data.score} points
             </span>{" "}
             by{" "}
-            <a href="user?id=mbrubeck" class="hnuser">
+            <span id={data.createdBy} class="hnuser">
               {data.createdBy}
-            </a>{" "}
+            </span>{" "}
             <span class="age">
-              <a href="item?id=19444376">{this.getDate(data.dateCreated)}</a>
+              <span>{this.getDate(data.dateCreated)}</span>
             </span>{" "}
             <span id="unv_19444376" /> |{" "}
             <NavLink to={"/item/" + data.id}>show</NavLink>

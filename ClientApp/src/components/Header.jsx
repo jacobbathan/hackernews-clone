@@ -15,14 +15,18 @@ class Header extends React.Component {
           >
             <tbody>
               <tr>
-                <td style={{ width: "18px", paddingRight: "4px" }} />
-                <a href="https://github.com/jacobbathan">
+                <td style={{ width: "18px" }} />
+                <a
+                  href="https://github.com/jacobbathan"
+                  style={{ marginRight: "0px" }}
+                >
                   <img
                     src={img}
                     style={{
                       border: "1px white solid",
                       height: "18px",
-                      width: "18px"
+                      width: "18px",
+                      marginRight: "-10px"
                     }}
                     alt="imgTest"
                   />

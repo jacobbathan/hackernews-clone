@@ -8,11 +8,13 @@ const onGlobalError = error => {
   return Promise.reject(error);
 };
 
-const uploadImage = image => {
+const uploadImage = file => {
+  // let data = new FormData();
+  // data.append("file", file);
   const config = {
     method: "POST",
     url: "/api/posts/upload",
-    payload: image,
+    payload: file,
     crossdomain: "true",
     headers: { "Content-Type": "application/json" }
   };

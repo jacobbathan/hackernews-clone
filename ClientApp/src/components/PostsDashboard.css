@@ -41,6 +41,10 @@ input:read-only {
   background-color: #d9d9d9;
 }
 
+.storylink {
+  color: #000000;
+}
+
 .votearrow {
   width: 10px;
   height: 10px;
