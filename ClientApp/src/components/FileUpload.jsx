@@ -9,7 +9,7 @@ class FileUpload extends React.Component {
   fileRef = React.createRef();
 
   uploadImage = event => {
-    const files = this.fileRef.current.file;
+    const files = this.fileRef.current.files;
     const formData = new FormData();
     if (files.length > 0) {
       for (let i = 0; i < files.length; i++) {
