@@ -20,7 +20,7 @@ namespace sabio_project.Controllers
         private readonly string connectionString = "Server=.\\SQLEXPRESS;Database=C68Personal;Trusted_Connection=True;";
 
         private WebScraperService webScraperService = new WebScraperService();
-        private FileUpload fileUpload = new FileUpload();
+        private ImageService fileUpload = new ImageService();
         private PostsService postService = new PostsService();
 
         [HttpGet]
@@ -243,9 +243,9 @@ namespace sabio_project.Controllers
         }
 
         [HttpPost("upload")]
-        public async Task<UploadPhotoModel> Upload(IFormFile file)
+        public async Task<UploadPhotoModel> Upload(List<IFormFile> files)
         {
-            //var file = files[0];
+            var file = files[0];
             UploadPhotoModel imageResponse = await fileUpload.UploadObject(file);
 
             fileUpload.InsertImage(imageResponse.FileUrl);

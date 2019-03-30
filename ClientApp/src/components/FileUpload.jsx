@@ -3,7 +3,7 @@ import * as imageServices from "../ImageServices";
 
 class FileUpload extends React.Component {
   state = {
-    primaryImage: ""
+    files: []
   };
 
   fileRef = React.createRef();
@@ -17,6 +17,7 @@ class FileUpload extends React.Component {
 
   uploadImageSuccess = res => {
     console.log(res);
+    this.props.history.push("/gallery");
   };
 
   uploadImageError = error => {
@@ -24,7 +25,7 @@ class FileUpload extends React.Component {
   };
 
   handleChange = evt => {
-    const file = evt.target.files[0];
+    const file = evt.target.files;
     this.uploadImage(file);
   };
 
@@ -33,7 +34,6 @@ class FileUpload extends React.Component {
       <div>
         <label htmlFor="uploadImage">Upload an Image:</label>
         <input
-          // ref={this.fileRef}
           id="primaryImage"
           type="file"
           name="primaryImage"
@@ -41,9 +41,6 @@ class FileUpload extends React.Component {
           onChange={this.handleChange}
         />
         <br />
-        <button type="button" onClick={this.uploadImage}>
-          upload
-        </button>
       </div>
     );
   }

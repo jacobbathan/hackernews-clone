@@ -8,13 +8,15 @@ const onGlobalError = error => {
   return Promise.reject(error);
 };
 
-const uploadImage = file => {
-  // let data = new FormData();
-  // data.append("file", file);
+const uploadImage = files => {
+  let data = new FormData();
+  for (let i = 0; i < files.length; i++) {
+    data.append("files", files[i]);
+  }
   const config = {
     method: "POST",
     url: "/api/posts/upload",
-    payload: file,
+    data: data,
     crossdomain: "true",
     headers: { "Content-Type": "application/json" }
   };
@@ -23,4 +25,16 @@ const uploadImage = file => {
     .catch(onGlobalError);
 };
 
-export { uploadImage };
+const getAllImages = () => {
+  const config = {
+    method: "GET",
+    url: "/api/images",
+    crossdomain: "true",
+    headers: { "Content-Type": "application/json" }
+  };
+  return axios(config)
+    .then(onGlobalSuccess)
+    .catch(onGlobalError);
+};
+
+export { uploadImage, getAllImages };

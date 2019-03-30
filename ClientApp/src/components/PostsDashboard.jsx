@@ -8,6 +8,7 @@ import PostForm from "./PostForm";
 import PostEdit from "./PostEdit";
 import FileUpload from "./FileUpload";
 import WebScraper from "./WebScraper";
+import Gallery from "./Gallery";
 
 class PostsDashboard extends React.Component {
   render() {
@@ -34,6 +35,10 @@ class PostsDashboard extends React.Component {
                 <Route
                   path="/webscraper"
                   render={props => <WebScraper {...props} />}
+                />
+                <Route
+                  path="/gallery"
+                  render={props => <Gallery {...props} />}
                 />
               </tbody>
             </table>

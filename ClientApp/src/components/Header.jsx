@@ -38,8 +38,8 @@ class Header extends React.Component {
                     </b>
                     {"  "}| <a href="">news</a> |{" "}
                     <a href="fileUpload">file upload</a> |{" "}
-                    <a href="webscraper">web scraper</a> | <a href="ask">ask</a>{" "}
-                    | <a href="show">show</a> | <a href="jobs">jobs</a> |{" "}
+                    <a href="webscraper">web scraper</a> |{" "}
+                    <a href="gallery">gallery</a> | <a href="jobs">jobs</a> |{" "}
                     <a href="submit">submit</a>{" "}
                   </span>
                 </td>

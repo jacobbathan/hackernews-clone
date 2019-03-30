@@ -27,8 +27,8 @@ class WebScraper extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <button onClick={this.scrapeTheWeb}>scrape the thing</button>
         <WebScraperMap posts={this.state.posts} />
+        <button onClick={this.scrapeTheWeb}>scrape the thing</button>
       </React.Fragment>
     );
   }

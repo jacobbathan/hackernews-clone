@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-//import GetDate from "./GetDate.jsx";
 
 class PostsMap extends React.Component {
   urlParser = url => {

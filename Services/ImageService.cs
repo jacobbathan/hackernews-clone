@@ -3,6 +3,7 @@ using Amazon.S3.Model;
 using Microsoft.AspNetCore.Http;
 using sabio_project.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace sabio_project.Services
 {
-    public class FileUpload
+    public class ImageService
     {
         private static String accessKey = "AKIAI3ORPSEEBF43HCBQ";
         private static String accessSecret = "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";
@@ -93,6 +94,43 @@ namespace sabio_project.Services
             {
                 throw exception;
             }
+        }
+
+        public List<Image> GetAllPhotos()
+        {
+            List<Image> photoList = null;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlCommand command = new SqlCommand("dbo.Images_GetAll", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Image photo = new Image();
+
+                        photo.Id = Convert.ToInt32(reader["Id"]);
+                        photo.ImageUrl = reader["ImageUrl"].ToString();
+                        photo.DateCreated = Convert.ToDateTime(reader["DateCreated"]);
+
+                        if (photoList == null)
+                        {
+                            photoList = new List<Image>();
+                        }
+                        photoList.Add(photo);
+                    }
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return photoList;
         }
     }
 }
