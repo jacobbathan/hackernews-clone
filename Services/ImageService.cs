@@ -16,7 +16,7 @@ namespace sabio_project.Services
         private static String accessKey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
         private static String accessSecret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx";
         private static String bucket = "xxxxxxxxxxxxxxxxxxxxxx";
-        private readonly string connectionString = "Server=.\\SQLEXPRESS;Database=C68Personal;Trusted_Connection=True;";
+        private readonly string connectionString = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
         public async Task<UploadPhotoModel> UploadObject(IFormFile file)
         {
