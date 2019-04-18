@@ -10,7 +10,7 @@ namespace sabio_project.Services
 {
     public class WebScraperService
     {
-        private readonly string connectionString = "Server=.\\SQLEXPRESS;Database=C68Personal;Trusted_Connection=True;";
+        private readonly string connectionString = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
         public int InsertWebScrape(WebScrapedPost model)
         {
