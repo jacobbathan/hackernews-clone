@@ -26,7 +26,12 @@ class Gallery extends React.Component {
   };
 
   render() {
-    return <GalleryMap images={this.state.images} />;
+    return (
+      <React.Fragment>
+        <div style={{ textAlign: "center" }}>important lilly pictures</div>
+        <GalleryMap images={this.state.images} />
+      </React.Fragment>
+    );
   }
 }
 

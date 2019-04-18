@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const token = "xoxb-563687756291-588802262934-GgzvlLsaySDiuDbaFrqNIHpr";
-const channel = "CH7HDQP0D";
+const token = process.env.SLACKTOKEN;
+const channel = process.env.SLACKCHANNEL;
 
 const onGlobalSuccess = response => {
   return response.data;

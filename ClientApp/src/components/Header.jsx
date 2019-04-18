@@ -32,15 +32,14 @@ class Header extends React.Component {
                   />
                 </a>
                 <td style={{ lineHeight: "12pt", height: "10px" }}>
-                  <span class="pagetop">
-                    <b class="hnname">
+                  <span className="pagetop">
+                    <b className="hnname">
                       <a href="">Lilly News</a>
                     </b>
                     {"  "}| <a href="">news</a> |{" "}
                     <a href="fileUpload">file upload</a> |{" "}
                     <a href="webscraper">web scraper</a> |{" "}
-                    <a href="gallery">gallery</a> | <a href="jobs">jobs</a> |{" "}
-                    <a href="submit">submit</a>{" "}
+                    <a href="gallery">gallery</a> | <a href="submit">submit</a>{" "}
                   </span>
                 </td>
                 <td style={{ textAlign: "right", paddingRight: "4px" }} />
