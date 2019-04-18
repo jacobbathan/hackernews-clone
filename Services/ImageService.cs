@@ -13,9 +13,9 @@ namespace sabio_project.Services
 {
     public class ImageService
     {
-        private static String accessKey = "AKIAI3ORPSEEBF43HCBQ";
-        private static String accessSecret = "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";
-        private static String bucket = "jacobfileuploader";
+        private static String accessKey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+        private static String accessSecret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+        private static String bucket = "xxxxxxxxxxxxxxxxxxxxxx";
         private readonly string connectionString = "Server=.\\SQLEXPRESS;Database=C68Personal;Trusted_Connection=True;";
 
         public async Task<UploadPhotoModel> UploadObject(IFormFile file)
@@ -49,7 +49,7 @@ namespace sabio_project.Services
                 {
                     Success = true,
                     FileName = fileName,
-                    FileUrl = "https://s3-us-west-1.amazonaws.com/jacobfileuploader/" + fileName
+                    FileUrl = "https://s3-us-west-1.amazonaws.com/xxxxxxxxxxxxxxxxxxxx/" + fileName
                 };
             }
             else
