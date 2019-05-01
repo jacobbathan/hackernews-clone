@@ -8,7 +8,7 @@ namespace sabio_project.Services
 {
     public class PostsService
     {
-        private string connectionString = "Server=.\\SQLEXPRESS;Database=C68Personal;Trusted_Connection=True;";
+        private string connectionString = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
         public List<Post> GetAllPosts()
         {
